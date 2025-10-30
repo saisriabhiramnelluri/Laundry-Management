@@ -1,0 +1,59 @@
+<div class="fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Welcome back, <%= user.name %>!</h1>
+            <p class="card-subtitle">Manage your laundry orders from your dashboard</p>
+        </div>
+    </div>
+    
+    <div class="dashboard-grid">
+        <div class="stat-card">
+            <div class="stat-number"><%= totalOrders %></div>
+            <div class="stat-label">Total Orders</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-number"><%= pendingOrders %></div>
+            <div class="stat-label">Pending Orders</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-number"><%= completedOrders %></div>
+            <div class="stat-label">Completed Orders</div>
+        </div>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Quick Actions</h3>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <a href="/student/create-order" class="btn btn-primary">Create New Order</a>
+                <a href="/student/orders" class="btn btn-secondary">View All Orders</a>
+                <a href="/student/profile" class="btn btn-secondary">Edit Profile</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Recent Orders</h3>
+            </div>
+            <% if (recentOrders && recentOrders.length > 0) { %>
+                <% recentOrders.forEach(order => { %>
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <strong>#<%= order.orderId %></strong>
+                            <br><small><%= order.clothesCount %> items</small>
+                        </div>
+                        <span class="status-badge status-<%= order.status %>"><%= order.status %></span>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p style="color: #666; text-align: center; padding: 2rem;">
+                    No orders yet. <a href="/student/create-order">Create your first order</a>
+                </p>
+            <% } %>
+        </div>
+    </div>
+</div>

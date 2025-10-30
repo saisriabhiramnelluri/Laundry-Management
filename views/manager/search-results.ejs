@@ -1,0 +1,95 @@
+<div class="fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Search Results</h2>
+            <p class="card-subtitle">
+                <% if (query) { %>
+                    Results for "<%= query %>" in <%= searchType %>
+                <% } else { %>
+                    Search for orders
+                <% } %>
+            </p>
+        </div>
+        
+        <form method="GET" action="/manager/search" style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr auto; gap: 1rem; align-items: end;">
+                <div>
+                    <label class="form-label">Search Type</label>
+                    <select name="searchType" class="form-input" required>
+                        <option value="">Select search type</option>
+                        <option value="orderId" <%= searchType === 'orderId' ? 'selected' : '' %>>Order ID</option>
+                        <option value="studentName" <%= searchType === 'studentName' ? 'selected' : '' %>>Student Name</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="form-label">Search Query</label>
+                    <input type="text" name="query" class="form-input" 
+                           value="<%= query || '' %>" placeholder="Enter search term" required>
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+        
+        <% if (orders && orders.length > 0) { %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Student</th>
+                        <th>Hostel/Room</th>
+                        <th>Items</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach(order => { %>
+                        <tr>
+                            <td><strong>#<%= order.orderId %></strong></td>
+                            <td><%= order.student.name %></td>
+                            <td><%= order.student.hostel %> - <%= order.student.roomNumber %></td>
+                            <td><%= order.clothesCount %></td>
+                            <td>
+                                <span class="status-badge status-<%= order.status %>">
+                                    <%= order.status %>
+                                </span>
+                            </td>
+                            <td><%= order.createdAt.toLocaleDateString() %></td>
+                            <td>
+                                <form action="/manager/update-status/<%= order.orderId %>" method="POST" style="display: inline;">
+                                    <select name="status" class="form-input" style="font-size: 0.8rem; padding: 0.3rem;" onchange="this.form.submit()">
+                                        <option value="pending" <%= order.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                                        <option value="washing" <%= order.status === 'washing' ? 'selected' : '' %>>Washing</option>
+                                        <option value="ready" <%= order.status === 'ready' ? 'selected' : '' %>>Ready</option>
+                                        <option value="completed" <%= order.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                                    </select>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else if (query) { %>
+            <div style="text-align: center; padding: 3rem; color: #666;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                <h3>No results found</h3>
+                <p>No orders match your search criteria.</p>
+            </div>
+        <% } else { %>
+            <div style="text-align: center; padding: 3rem; color: #666;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">🔍</div>
+                <h3>Search for Orders</h3>
+                <p>Use the form above to search for orders by ID or student name.</p>
+            </div>
+        <% } %>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/manager/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>

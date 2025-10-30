@@ -1,0 +1,51 @@
+<div class="form-container fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Order Details</h2>
+            <p class="card-subtitle">Scanned from QR Code</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+            <div>
+                <h4>Order Information</h4>
+                <p><strong>Order ID:</strong> <%= order.orderId %></p>
+                <p><strong>Status:</strong> 
+                    <span class="status-badge status-<%= order.status %>"><%= order.status %></span>
+                </p>
+                <p><strong>Clothes Count:</strong> <%= order.clothesCount %></p>
+                <p><strong>Created:</strong> <%= order.createdAt.toLocaleDateString() %></p>
+                <% if (order.notes) { %>
+                    <p><strong>Notes:</strong> <%= order.notes %></p>
+                <% } %>
+            </div>
+            
+            <div>
+                <h4>Student Information</h4>
+                <p><strong>Name:</strong> <%= order.student.name %></p>
+                <p><strong>Hostel:</strong> <%= order.student.hostel %></p>
+                <p><strong>Room:</strong> <%= order.student.roomNumber %></p>
+                <p><strong>Phone:</strong> <%= order.student.phone %></p>
+            </div>
+        </div>
+        
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #eee;">
+            <h4>Update Order Status</h4>
+            <form action="/manager/update-status/<%= order.orderId %>" method="POST" style="display: flex; gap: 1rem; align-items: end;">
+                <div>
+                    <label class="form-label">New Status</label>
+                    <select name="status" class="form-input" required>
+                        <option value="pending" <%= order.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                        <option value="washing" <%= order.status === 'washing' ? 'selected' : '' %>>Washing</option>
+                        <option value="ready" <%= order.status === 'ready' ? 'selected' : '' %>>Ready</option>
+                        <option value="completed" <%= order.status === 'completed' ? 'selected' : '' %>>Completed</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Update Status</button>
+            </form>
+        </div>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/manager/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="form-container fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Order Created Successfully! 🎉</h2>
+            <p class="card-subtitle">Your QR code has been generated</p>
+        </div>
+        
+        <div class="qr-container">
+            <h3>Order #<%= order.orderId %></h3>
+            <div class="qr-code">
+                <img src="<%= qrCode %>" alt="QR Code for Order <%= order.orderId %>">
+            </div>
+            <p><strong>Items:</strong> <%= order.clothesCount %></p>
+            <% if (order.notes) { %>
+                <p><strong>Notes:</strong> <%= order.notes %></p>
+            <% } %>
+            
+            <div style="margin-top: 2rem;">
+                <a href="<%= qrCode %>" download="order-<%= order.orderId %>.png" class="btn btn-primary">
+                    Download QR Code
+                </a>
+                <a href="/student/orders" class="btn btn-secondary" style="margin-left: 1rem;">
+                    View All Orders
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Laundry Management System' %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qr-scanner/1.4.2/qr-scanner.umd.min.js"></script>
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    
+    <main class="main-content">
+        <div class="container">
+            <% if (typeof success !== 'undefined' && success.length > 0) { %>
+                <div class="alert alert-success fade-in">
+                    <%= success %>
+                </div>
+            <% } %>
+            
+            <% if (typeof error !== 'undefined' && error.length > 0) { %>
+                <div class="alert alert-error fade-in">
+                    <%= error %>
+                </div>
+            <% } %>
+            
+            <%- body %>
+        </div>
+    </main>
+    
+    <%- include('partials/footer') %>
+    
+    <script src="/javascripts/main.js"></script>
+</body>
+</html>

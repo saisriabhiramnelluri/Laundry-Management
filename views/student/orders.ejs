@@ -1,0 +1,85 @@
+<div class="fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">My Orders</h2>
+            <p class="card-subtitle">Track and manage your laundry orders</p>
+        </div>
+        
+        <form method="GET" action="/student/orders" style="background: #f8f9fa; padding: 1rem; border-radius: 8px; margin-bottom: 2rem;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 1rem; align-items: end;">
+                <div>
+                    <label class="form-label">Status Filter</label>
+                    <select name="status" class="form-input">
+                        <option value="all" <%= (filters && filters.status === 'all') ? 'selected' : '' %>>All Status</option>
+                        <option value="pending" <%= (filters && filters.status === 'pending') ? 'selected' : '' %>>Pending</option>
+                        <option value="washing" <%= (filters && filters.status === 'washing') ? 'selected' : '' %>>Washing</option>
+                        <option value="ready" <%= (filters && filters.status === 'ready') ? 'selected' : '' %>>Ready</option>
+                        <option value="completed" <%= (filters && filters.status === 'completed') ? 'selected' : '' %>>Completed</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="form-label">Start Date</label>
+                    <input type="date" name="startDate" class="form-input" 
+                           value="<%= (filters && filters.startDate) ? filters.startDate : '' %>">
+                </div>
+                
+                <div>
+                    <label class="form-label">End Date</label>
+                    <input type="date" name="endDate" class="form-input" 
+                           value="<%= (filters && filters.endDate) ? filters.endDate : '' %>">
+                </div>
+                
+                <div>
+                    <button type="submit" class="btn btn-primary">Filter</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <div class="card">
+        <% if (orders && orders.length > 0) { %>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date Created</th>
+                        <th>Items</th>
+                        <th>Status</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% orders.forEach(order => { %>
+                        <tr>
+                            <td><strong>#<%= order.orderId %></strong></td>
+                            <td><%= order.createdAt.toLocaleDateString() %></td>
+                            <td><%= order.clothesCount %> items</td>
+                            <td>
+                                <span class="status-badge status-<%= order.status %>">
+                                    <%= order.status %>
+                                </span>
+                            </td>
+                            <td>
+                                <%= order.notes ? order.notes.substring(0, 50) + (order.notes.length > 50 ? '...' : '') : 'No notes' %>
+                            </td>
+                            <td>
+                                <a href="/orders/<%= order._id %>" class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.6rem;">
+                                    View Details
+                                </a>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <div style="text-align: center; padding: 3rem; color: #666;">
+                <div style="font-size: 3rem; margin-bottom: 1rem;">📦</div>
+                <h3>No orders found</h3>
+                <p>You haven't created any orders yet, or no orders match your filter criteria.</p>
+                <a href="/student/create-order" class="btn btn-primary" style="margin-top: 1rem;">Create Your First Order</a>
+            </div>
+        <% } %>
+    </div>
+</div>

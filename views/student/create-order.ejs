@@ -1,0 +1,51 @@
+<div class="form-container fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Create New Order</h2>
+            <p class="card-subtitle">Fill in your laundry details to generate QR code</p>
+        </div>
+        
+        <form action="/student/create-order" method="POST">
+            <div class="form-group">
+                <label for="clothesCount" class="form-label">Number of Clothes</label>
+                <input type="number" class="form-input" id="clothesCount" name="clothesCount" 
+                       min="1" max="50" required placeholder="Enter number of clothes">
+                <small style="color: #666;">Maximum 50 items per order</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="notes" class="form-label">Special Instructions (Optional)</label>
+                <textarea class="form-input form-textarea" id="notes" name="notes" 
+                          placeholder="Add any special instructions like 'Handle with care', 'Separate whites and colors', etc."></textarea>
+            </div>
+            
+            <div class="form-group" style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                <h4>Order Summary</h4>
+                <p><strong>Student:</strong> <%= user.name %></p>
+                <small style="color: #666;">
+                    A unique QR code will be generated for this order after submission
+                </small>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                Create Order & Generate QR Code
+            </button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <a href="/student/dashboard" class="btn btn-secondary">Cancel</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const clothesCount = document.getElementById('clothesCount');
+    clothesCount.addEventListener('input', function() {
+        if (this.value > 50) {
+            this.value = 50;
+        }
+        if (this.value < 1) {
+            this.value = 1;
+        }
+    });
+</script>

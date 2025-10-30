@@ -1,0 +1,30 @@
+<div class="form-container fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Manager Login</h2>
+            <p class="card-subtitle">Access the management dashboard</p>
+        </div>
+        
+        <form action="/manager/login" method="POST">
+            <div class="form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" class="form-input" id="email" name="email" required 
+                       placeholder="Enter your manager email">
+            </div>
+            
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-input" id="password" name="password" required 
+                       placeholder="Enter your password">
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                Access Dashboard
+            </button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 1.5rem; color: #666;">
+            <p>Are you a student? <a href="/student/login" style="color: #667eea;">Login here</a></p>
+        </div>
+    </div>
+</div>

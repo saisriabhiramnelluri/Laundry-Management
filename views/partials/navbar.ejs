@@ -1,0 +1,24 @@
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="/" class="nav-brand">🧺 LaundryApp</a>
+        
+        <ul class="nav-links">
+            <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+                <% if (currentUser.role === 'student') { %>
+                    <li><a href="/student/dashboard">Dashboard</a></li>
+                    <li><a href="/student/create-order">New Order</a></li>
+                    <li><a href="/student/orders">My Orders</a></li>
+                    <li><a href="/student/profile">Profile</a></li>
+                <% } else if (currentUser.role === 'manager') { %>
+                    <li><a href="/manager/dashboard">Dashboard</a></li>
+                    <li><a href="/manager/scan-qr">Scan QR</a></li>
+                    <li><a href="/manager/search">Search Orders</a></li>
+                <% } %>
+                <li><a href="/logout">Logout (<%= currentUser.name %>)</a></li>
+            <% } else { %>
+                <li><a href="/student/login">Student Login</a></li>
+                <li><a href="/manager/login">Manager Login</a></li>
+            <% } %>
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,77 @@
+<div class="fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h1 class="card-title">Manager Dashboard</h1>
+            <p class="card-subtitle">Laundry Service Management Overview</p>
+        </div>
+    </div>
+    
+    <div class="dashboard-grid">
+        <div class="stat-card">
+            <div class="stat-number"><%= totalOrders %></div>
+            <div class="stat-label">Total Orders</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-number"><%= pendingOrders %></div>
+            <div class="stat-label">Pending Orders</div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-number"><%= completedOrders %></div>
+            <div class="stat-label">Completed Orders</div>
+        </div>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Quick Actions</h3>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                <a href="/manager/scan-qr" class="btn btn-primary">Scan QR Code</a>
+                <a href="/manager/search" class="btn btn-secondary">Search Orders</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Recent Orders</h3>
+            </div>
+            <% if (recentOrders && recentOrders.length > 0) { %>
+                <% recentOrders.forEach(order => { %>
+                    <div style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <strong>#<%= order.orderId %></strong>
+                                <br><small><%= order.student.name %> - <%= order.student.hostel %></small>
+                            </div>
+                            <div style="text-align: right;">
+                                <span class="status-badge status-<%= order.status %>"><%= order.status %></span>
+                                <br><small><%= order.clothesCount %> items</small>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p style="color: #666; text-align: center; padding: 2rem;">No recent orders</p>
+            <% } %>
+        </div>
+    </div>
+    
+    <% if (statusData && statusData.length > 0) { %>
+    <div class="card" style="margin-top: 2rem;">
+        <div class="card-header">
+            <h3 class="card-title">Order Status Distribution</h3>
+        </div>
+        <div style="display: flex; justify-content: space-around; align-items: center; padding: 1rem;">
+            <% statusData.forEach(status => { %>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: bold; color: #667eea;"><%= status.count %></div>
+                    <div style="text-transform: capitalize; color: #666;"><%= status._id %></div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    <% } %>
+</div>

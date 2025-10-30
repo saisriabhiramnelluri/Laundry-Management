@@ -1,0 +1,85 @@
+<div class="fade-in">
+    <div class="card form-container">
+        <div class="card-header">
+            <h2 class="card-title">Scan QR Code</h2>
+            <p class="card-subtitle">Scan student's order QR code to view details and update status</p>
+        </div>
+        
+        <div class="video-container">
+            <video id="video" autoplay></video>
+            <div class="scan-overlay"></div>
+        </div>
+        
+        <div style="text-align: center; margin: 2rem 0;">
+            <button id="startBtn" class="btn btn-primary">Start Camera</button>
+            <button id="stopBtn" class="btn btn-secondary" style="display: none;">Stop Camera</button>
+        </div>
+        
+        <div id="result" style="display: none;">
+            <div class="card">
+                <h3>Scanned QR Code Result:</h3>
+                <pre id="qrResult" style="background: #f8f9fa; padding: 1rem; border-radius: 5px; overflow: auto;"></pre>
+                
+                <form action="/manager/scan-qr" method="POST">
+                    <input type="hidden" id="qrData" name="qrData">
+                    <button type="submit" class="btn btn-success">Process Order</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card" style="margin-top: 2rem;">
+            <h4>Manual Order Search</h4>
+            <p>If camera doesn't work, you can manually search for orders:</p>
+            <a href="/manager/search" class="btn btn-secondary">Search Orders Manually</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const video = document.getElementById('video');
+    const startBtn = document.getElementById('startBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const result = document.getElementById('result');
+    const qrResult = document.getElementById('qrResult');
+    const qrDataInput = document.getElementById('qrData');
+    
+    let qrScanner = null;
+    
+    startBtn.addEventListener('click', startScanning);
+    stopBtn.addEventListener('click', stopScanning);
+    
+    async function startScanning() {
+        try {
+            if (typeof QrScanner === 'undefined') {
+                alert('QR Scanner library not loaded. Please refresh the page.');
+                return;
+            }
+            
+            startBtn.style.display = 'none';
+            stopBtn.style.display = 'inline-block';
+            
+            qrScanner = new QrScanner(video, result => {
+                console.log('QR Code detected:', result);
+                qrResult.textContent = result;
+                qrDataInput.value = result;
+                document.getElementById('result').style.display = 'block';
+                stopScanning();
+            });
+            
+            await qrScanner.start();
+        } catch (error) {
+            console.error('Error starting QR scanner:', error);
+            alert('Error accessing camera. Please ensure camera permissions are granted.');
+            stopScanning();
+        }
+    }
+    
+    function stopScanning() {
+        if (qrScanner) {
+            qrScanner.stop();
+            qrScanner = null;
+        }
+        startBtn.style.display = 'inline-block';
+        stopBtn.style.display = 'none';
+    }
+</script>

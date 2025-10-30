@@ -1,0 +1,48 @@
+<div class="form-container fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">My Profile</h2>
+            <p class="card-subtitle">Update your personal information</p>
+        </div>
+        
+        <form action="/student/profile" method="POST">
+            <div class="form-group">
+                <label for="name" class="form-label">Full Name</label>
+                <input type="text" class="form-input" id="name" name="name" required 
+                       value="<%= student.name %>" placeholder="Enter your full name">
+            </div>
+            
+            <div class="form-group">
+                <label for="hostel" class="form-label">Hostel</label>
+                <input type="text" class="form-input" id="hostel" name="hostel" required 
+                       value="<%= student.hostel %>" placeholder="Enter your hostel name">
+            </div>
+            
+            <div class="form-group">
+                <label for="roomNumber" class="form-label">Room Number</label>
+                <input type="text" class="form-input" id="roomNumber" name="roomNumber" required 
+                       value="<%= student.roomNumber %>" placeholder="Enter your room number">
+            </div>
+            
+            <div class="form-group">
+                <label for="phone" class="form-label">Phone Number</label>
+                <input type="tel" class="form-input" id="phone" name="phone" required 
+                       value="<%= student.phone %>" placeholder="Enter your phone number">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Email (Read-only)</label>
+                <input type="email" class="form-input" value="<%= student.email %>" readonly 
+                       style="background-color: #f8f9fa;">
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                Update Profile
+            </button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <a href="/student/dashboard" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>

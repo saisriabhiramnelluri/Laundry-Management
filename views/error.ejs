@@ -1,0 +1,16 @@
+<div class="card form-container fade-in">
+    <div class="card-header">
+        <h1 class="card-title">Oops! Something went wrong</h1>
+    </div>
+    
+    <div style="text-align: center; padding: 2rem 0;">
+        <div style="font-size: 4rem; color: #dc3545; margin-bottom: 1rem;">⚠️</div>
+        <h2 style="color: #dc3545; margin-bottom: 1rem;">Error <%= status || 500 %></h2>
+        <p style="color: #666; font-size: 1.1rem; margin-bottom: 2rem;">
+            <%= message || 'Internal Server Error' %>
+        </p>
+        
+        <a href="/" class="btn btn-primary">Go Home</a>
+        <button onclick="history.back()" class="btn btn-secondary" style="margin-left: 1rem;">Go Back</button>
+    </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="form-container fade-in">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Order Details</h2>
+            <p class="card-subtitle">Order #<%= order.orderId %></p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem;">
+            <div>
+                <h4>Order Information</h4>
+                <p><strong>Order ID:</strong> <%= order.orderId %></p>
+                <p><strong>Status:</strong> 
+                    <span class="status-badge status-<%= order.status %>"><%= order.status %></span>
+                </p>
+                <p><strong>Clothes Count:</strong> <%= order.clothesCount %></p>
+                <p><strong>Created:</strong> <%= order.createdAt.toLocaleDateString() %></p>
+                <% if (order.notes) { %>
+                    <p><strong>Special Instructions:</strong> <%= order.notes %></p>
+                <% } %>
+            </div>
+            
+            <div>
+                <h4>QR Code</h4>
+                <% if (order.qrCode) { %>
+                    <div class="qr-container">
+                        <img src="<%= order.qrCode %>" alt="QR Code" style="max-width: 200px;">
+                        <br>
+                        <a href="<%= order.qrCode %>" download="order-<%= order.orderId %>.png" class="btn btn-primary" style="margin-top: 1rem;">
+                            Download QR Code
+                        </a>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+        
+        <% if (order.statusHistory && order.statusHistory.length > 0) { %>
+        <div>
+            <h4>Status History</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Date/Time</th>
+                        <th>Updated By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% order.statusHistory.forEach(history => { %>
+                        <tr>
+                            <td><span class="status-badge status-<%= history.status %>"><%= history.status %></span></td>
+                            <td><%= history.timestamp.toLocaleString() %></td>
+                            <td><%= history.updatedBy ? history.updatedBy.name : 'System' %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        <% } %>
+        
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="/student/orders" class="btn btn-secondary">Back to Orders</a>
+        </div>
+    </div>
+</div>
